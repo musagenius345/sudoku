@@ -1,8 +1,72 @@
-body {
-  /* background-color: oklch(80 1.2 12); */
-  /* min-height: 100dvh; */
-  /* margin-block: 5dvh; */
+@import url('./normalize.css');
+
+@font-face {
+  font-family: 'Varela';
+  src: url('/fonts/varela-round-latin-400-normal.woff2'),
+   url('/fonts/varela-round-latin-400-normal.woff');
 }
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/fonts/mulish-latin-ext-900-normal.woff2'),
+       url('/fonts/mulish-latin-ext-900-normal.woff');
+}
+
+
+:root {
+  --bg: #f9f9f9;
+  --txt: #7b7b7b;
+  --ttt: #69A0BF;
+}
+
+
+body {
+  color-scheme: light dark;
+  background-color: var(--bg);
+  color: var(--txt);
+  font-family: 'Mulish', Arial, Helvetica, sans-serif;
+}
+
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #0D161D;
+    --ttt: #BDD0E1;
+    --txt: #56C2F0;
+  }
+}
+
+
+
+:root{
+  /* UTOPIA - https://utopia.fyi/space/calculator/?c=375,16,1.2,1440,29,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12*/
+    --space-3xs: clamp(0.25rem, 0.184rem + 0.2817vw, 0.4375rem);
+  --space-2xs: clamp(0.5rem, 0.346rem + 0.6573vw, 0.9375rem);
+  --space-xs: clamp(0.75rem, 0.5299rem + 0.939vw, 1.375rem);
+  --space-s: clamp(1rem, 0.7139rem + 1.2207vw, 1.8125rem);
+  --space-m: clamp(1.5rem, 1.0599rem + 1.8779vw, 2.75rem);
+  --space-l: clamp(2rem, 1.4278rem + 2.4413vw, 3.625rem);
+  --space-xl: clamp(3rem, 2.1417rem + 3.662vw, 5.4375rem);
+  --space-2xl: clamp(4rem, 2.8556rem + 4.8826vw, 7.25rem);
+  --space-3xl: clamp(6rem, 4.2835rem + 7.3239vw, 10.875rem);
+
+  /* One-up pairs */
+  --space-3xs-2xs: clamp(0.25rem, 0.0079rem + 1.0329vw, 0.9375rem);
+  --space-2xs-xs: clamp(0.5rem, 0.1919rem + 1.3146vw, 1.375rem);
+  --space-xs-s: clamp(0.75rem, 0.3759rem + 1.5962vw, 1.8125rem);
+  --space-s-m: clamp(1rem, 0.3838rem + 2.6291vw, 2.75rem);
+  --space-m-l: clamp(1.5rem, 0.7518rem + 3.1925vw, 3.625rem);
+  --space-l-xl: clamp(2rem, 0.7896rem + 5.1643vw, 5.4375rem);
+  --space-xl-2xl: clamp(3rem, 1.5035rem + 6.385vw, 7.25rem);
+  --space-2xl-3xl: clamp(4rem, 1.5792rem + 10.3286vw, 10.875rem);
+
+  /* Custom pairs */
+  --space-s-l: clamp(1rem, 0.0757rem + 3.9437vw, 3.625rem);
+
+}
+
+
+
 .content-grid {
   --padding-inline: 1rem;
   --content-max-width: 900px;
@@ -45,6 +109,41 @@ img.full-width {
   object-fit: cover;
 }
 
-.img{
-  background-color: #F8FC01;
+
+
+
+
+.game {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap: 0.18rem;
+  /* background-color: var(--ttt); */
+  margin-block: 0.8rem;
 }
+
+
+.centre {
+  display: grid;
+  place-items: center;
+}
+
+
+#resetBtn{
+  font: inherit;
+  border: 0;
+  font-size: 1.3rem;
+  width: 8.5rem;
+  height: 3.2rem;
+  line-height: 1.7;
+  padding-inline: .2rem;
+  padding-block: .6rem;
+  border-radius: 0.525rem;
+  background-color: var(--ttt);
+  color: var(--bg);
+}
+#resetBtn:hover {
+  background-color: var(--txt);
+  scale: 0.98;
+}
+

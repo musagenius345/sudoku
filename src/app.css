@@ -113,15 +113,6 @@ img.full-width {
 
 
 
-.game {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(9, 1fr);
-  gap: 0.18rem;
-  /* background-color: var(--ttt); */
-  margin-block: 0.8rem;
-}
-
 
 .centre {
   display: grid;

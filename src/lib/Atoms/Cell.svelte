@@ -6,6 +6,7 @@
  const min = 1
   let cellRef
   let slot
+  let solid
  let id = `cell-${crypto.randomUUID()}`
 
   
@@ -14,25 +15,23 @@
  function checkEmpty(node){
    const cell = document.getElementById(id)
 
-   if(cell.textContent === ''){
-     cell.setAttribute('disabled', 'false')
-     cell.addEventListener('click', ()=> {
-       slot.textContent = 8
-       //cell.setAttribute('contenteditable', false)
-     })
-   }
+   if(cell.textContent !== ''){
+      solid = true
+    }
 
 
  }
 </script>
 <div class="cell" {id} bind:this={cellRef} data-value={value} on:click={onclick} use:checkEmpty >
-<span class="number" bind:this={slot}><slot><!-- optional fallback --></slot></span>
+<span class="number" class:solid bind:this={slot}><slot><!-- optional fallback --></slot></span>
 </div>
   <style>
   /* div { */
     /* margin: var(--space-s-m); */
     /* padding: var(--space-s-l); */
   /* } */
+
+  
    .number {
     margin: 0 auto;
     padding: var(--space-xs-s);
@@ -91,6 +90,8 @@
   inset-block-start: 0;
   inset-inline-start: calc(var(--line-offset) * -1);
 }
-
+.solid{
+    /* opacity: 0.8; */
+  }
 
 </style>

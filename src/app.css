@@ -62,7 +62,10 @@ body {
 
   /* Custom pairs */
   --space-s-l: clamp(1rem, 0.0757rem + 3.9437vw, 3.625rem);
-
+  --outer-grid-gap: 2px;
+  --line-offset: calc(var(--gap) / 2);
+  --line-thickness: 0.0625rem;
+  --line-color: var(--ttt);
 }
 
 

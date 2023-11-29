@@ -1,21 +1,29 @@
 <script>
- import {levels} from '$store/level'
+ import {levels, selectedLevel} from '$store/table'
   function formatLevelString(str){
     if(str.includes('-')){
       return str = str.split('-').map(el => el.slice(0, 1).toUpperCase() + el.slice(1)).join(' ')
     }
     return str.slice(0, 1).toUpperCase() + str.slice(1)
   }
+function changeLevel(e) {
+  $selectedLevel = e.target.value
+  console.log($selectedLevel, e.target.value)
+}
+
 </script>
 
 <header>
   <h1>Sudoku 9X9</h1>
-  <select name="level" id="level" >
+  <label for="level">
+    <h3>Choose a level</h3>
+  <select name="level" id="level" on:change={changeLevel} bind:value={$selectedLevel}>
     {#each levels as level}
       <!-- TODO  bind value to selected level-->
-       <option on:click={(e) => console.log(e.target.value)} value={level}>{formatLevelString(level)}</option>
+       <option value={level}>{formatLevelString(level)}</option>
     {/each}
   </select>
+  </label>
 </header>
 
   <style>

@@ -1,6 +1,5 @@
 <script>
-  const levels = ['easy', 'medium', 'hard', 'very-hard', 'insane', 'inhumane']
-
+ import {levels} from '$store/level'
   function formatLevelString(str){
     if(str.includes('-')){
       return str = str.split('-').map(el => el.slice(0, 1).toUpperCase() + el.slice(1)).join(' ')
@@ -11,9 +10,10 @@
 
 <header>
   <h1>Sudoku 9X9</h1>
-  <select name="level" id="level">
+  <select name="level" id="level" >
     {#each levels as level}
-       <option value={level}>{formatLevelString(level)}</option>
+      <!-- TODO  bind value to selected level-->
+       <option on:click={(e) => console.log(e.target.value)} value={level}>{formatLevelString(level)}</option>
     {/each}
   </select>
 </header>

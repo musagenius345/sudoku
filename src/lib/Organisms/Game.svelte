@@ -1,22 +1,17 @@
 <script lang='ts'>
   import Cell from '$atom/Cell.svelte'
   import SudokuToolCollection from '../../sudokujs/src/main.ts'
+  import { selectedLevel } from '$store/level'
   const sudoku = SudokuToolCollection()
-  const table = sudoku.generator.generate('easy')
+  const table = sudoku.generator.generate($selectedLevel)
 
 
-  function removeDot(dot){
-    if(dot === '.'){
-      return ''
-      
-    }
-    return dot
-  }
+  const removeDot = (str) => str === '.' ? '' : str
 </script>
 
 <div class="game">
 {#each table as grid}
-   <Cell>{removeDot(grid)}</Cell>
+   <Cell value={removeDot(grid)}>{removeDot(grid)}</Cell>
 {/each}
 </div>
 

@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte'
+  // import { onMount } from 'svelte'
  export let onclick
  export let value
  const max = 9;
@@ -12,18 +12,26 @@
   
 
 
- onMount(() => {
-   if( cellRef && cellRef.textContent === ''){
-      solid = false
-    } else {
-     solid = true
-   }
-  }
- )
+ 
 
+
+  function addAttributes(node){
+    const data = node.dataset
+    if(data.value !== ''){
+      // data.initialValue = true
+      solid = true
+    } else {
+     // data.initialValue = false
+    }
+   
+    // intial cell design
+    
+
+  }
  // $: solid = cellRef.textContent === '' ? false : true
 </script>
-<button class="cell" {id} bind:this={cellRef} data-value={value} on:click={onclick} >
+
+<button class="cell" {id} bind:this={cellRef} data-value={value} on:click={onclick} use:addAttributes>
 <span class="number" class:solid bind:this={slot}><slot><!-- optional fallback --></slot></span>
 </button>
   <style>

@@ -63,6 +63,24 @@ body {
 
 
 :root{
+
+   /* @link https://utopia.fyi/type/calculator?c=320,18,1.2,1440,20,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+
+  --step--2: clamp(0.7813rem, 0.7759rem + 0.0268vw, 0.8rem);
+  --step--1: clamp(0.9375rem, 0.9196rem + 0.0893vw, 1rem);
+  --step-0: clamp(1.125rem, 1.0893rem + 0.1786vw, 1.25rem);
+  --step-1: clamp(1.35rem, 1.2893rem + 0.3036vw, 1.5625rem);
+  --step-2: clamp(1.62rem, 1.5248rem + 0.4759vw, 1.9531rem);
+  --step-3: clamp(1.9438rem, 1.8016rem + 0.7107vw, 2.4413rem);
+  --step-4: clamp(2.3325rem, 2.127rem + 1.0277vw, 3.0519rem);
+  --step-5: clamp(2.7994rem, 2.5092rem + 1.4509vw, 3.815rem);
+
+
+
+
+
+
   /* UTOPIA - https://utopia.fyi/space/calculator/?c=375,16,1.2,1440,29,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12*/
     --space-3xs: clamp(0.25rem, 0.184rem + 0.2817vw, 0.4375rem);
   --space-2xs: clamp(0.5rem, 0.346rem + 0.6573vw, 0.9375rem);

@@ -1,14 +1,13 @@
 <script lang='ts'>
   import {blur} from 'svelte/transition'
   import Cell from '$atom/Cell.svelte'
-  import  {createTable} from '$store/table'
+  import  {createTable, selectedLevel} from '$store/table'
   import SudokuToolCollection from '../../sudokujs/src/main'
 
   const sudoku = SudokuToolCollection()
 
 
-  $: currentGame = 'current'
-  let {table, solveGame, resetGame} = createTable()
+  let {table, solveGame, resetGame, solved} = createTable()
   const removeDot = (str) => str === '.' ? '' : str
 
 
@@ -17,19 +16,20 @@
   }
 
   function resetSudoku(){
+    $solved = !$solved
     $table = ''
-    currentGame = 'new'
     resetGame()
-    currentGame = 'current'
   }
 
 
 </script>
+  <!-- <button>{$selectedLevel}</button> -->
+
   <div class="flex">
-  <button on:click={solveSudoku}>Solve</button>
-  <button on:click={resetSudoku}>Reset</button>
+  <button class='solve' on:click={solveSudoku}>Solve</button>
+  <button class='reset' on:click={resetSudoku}>Reset</button>
   </div>
-{#key currentGame === 'new' || $table}
+{#key $solved}
 <div class="game grid">
 {#each $table as grid}
    <Cell value={removeDot(grid)}>{removeDot(grid)}</Cell>
@@ -37,9 +37,34 @@
 </div>
 {/key}
 
+
+<div class="choices">
+  {#each Array.from({length: 9}, (v, i) => i + 1) as number}
+    <button class='number'>{number}</button>
+  {/each}
+</div>
   <style>
+  button{all: unset;}
+.choices{
+  margin: var(--space-2xs-xs) auto;
+  display: grid;
+  gap: var(--space-s-m);
+  grid-auto-flow: column;
+}
+.number{
+  
+  --size: 1.6rem;
+ text-align: center;
+  font-size: var(--step-2);
+  width: var(--size);
+  height: var(--size);
+  padding: var(--space-3xs-2xs);
+  border: 1px solid var(--original-clr);
+  color: var(--original-clr);
+  border-radius: 50%;
 
-
+  /*cursor: pointer;*/
+}
 .grid {
   max-width: 100%;
   width: 100%;
@@ -51,7 +76,7 @@
 
   margin-block: var(--space-l-xl);
 }
-  button{
+button:is(.solve, .reset){
   max-width: 100%;
   border-radius: 12px;
  outline: 0;

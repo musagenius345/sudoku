@@ -16,6 +16,7 @@ export const selectedLevel = persisted<Level>('selectedLevel', 'easy');
 
 export function createTable(){
   const sudoku = SudokuToolCollection()
+  let solved = persisted<boolean>('solved-sudoku', false)
   // let chosenLevel = derived(selectedLevel, () => selectedLevel)
   const table = persisted<string | any>('sudoku-table-MB', sudoku.generator.generate(get(selectedLevel)))
    
@@ -27,12 +28,12 @@ export function createTable(){
 
   function resetGame(){
     table.set(sudoku.generator.generate((get(selectedLevel))))
-   
   }
  return {
     table,
     solveGame,
-    resetGame
+    resetGame,
+    solved
     }
 
 }

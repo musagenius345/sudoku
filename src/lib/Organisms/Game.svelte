@@ -5,7 +5,7 @@
   import SudokuToolCollection from '../../sudokujs/src/main'
 
   const sudoku = SudokuToolCollection()
-
+  let GAME_MODE = null
 
   let {table, solveGame, resetGame, solved} = createTable()
   const removeDot = (str) => str === '.' ? '' : str
@@ -22,30 +22,41 @@
   }
   
   function handleControls(e){
-    const control = e.currentTarget.dataset
-    console.log(control)
-    const controlFunctions = new Map()
-    controlFunctions
-    .set('delete', handleDelete)
-    .set('undo', handleUndo)
-    .set('check', handleCheckSolution)
-    .set('edit', handleEdit);
-      if(controlFunctions.has(control)){
-      controlFunctions.get(control)
-    } else{
-      return
-    }
+    const control = e.currentTarget.dataset.control
+    // console.log(control)
+    
+   switch (control) {
+    case 'delete':
+      GAME_MODE = 'DELETE'
+      break;
+    case 'undo':
+      GAME_MODE = 'UNDO'
+      break;
+    case 'check':
+      GAME_MODE = 'CHECK'
+      break;
+    case 'edit':
+      GAME_MODE = 'EDIT'
+      break;
+    default:
+      break;
+   } 
   }
 
-  function handleDelete(){ console.log('delete')}
-  function handleUndo(){ console.log('undo')}
-  function handleCheckSolution(){ console.log('check')}
-  function handleEdit(){ console.log('edit')}
+  
+$: GAME_MODE
 
+function handleCellClick(e) {
+    if(e.currentTarget.textContent === '' && GAME_MODE === 'EDIT'){
+      console.log(e.currentTarget.span)
+     e.currentTarget.dataset.value = 8
+    }
 
-
+    // console.log(e.currentTarget.textContent)
+  
+}
 </script>
-  <!-- <button>{$selectedLevel}</button> -->
+  <button>{GAME_MODE}</button>
   <div class="flex">
   <button class='solve' on:click={solveSudoku}>Solve</button>
   <button class='reset' on:click={resetSudoku}>Reset</button>
@@ -53,7 +64,7 @@
 {#key $solved}
 <div class="game grid">
 {#each $table as grid}
-   <Cell value={removeDot(grid)}>{removeDot(grid)}</Cell>
+   <Cell {handleCellClick} value={removeDot(grid)}>{removeDot(grid)}</Cell>
 {/each}
 </div>
 {/key}

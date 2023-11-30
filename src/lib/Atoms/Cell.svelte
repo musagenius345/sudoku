@@ -1,11 +1,11 @@
 <script>
   // import { onMount } from 'svelte'
- export let onclick
+ export let handleCellClick
  export let value
  const max = 9;
  const min = 1
   let cellRef
-  let slot
+  $: slot
   let solid
  export let id = `cell-${crypto.randomUUID()}`
 
@@ -17,6 +17,7 @@
 
   function addAttributes(node){
     const data = node.dataset
+    slot = data.value
     if(data.value !== ''){
       // data.initialValue = true
       solid = true
@@ -31,7 +32,7 @@
  // $: solid = cellRef.textContent === '' ? false : true
 </script>
 
-<button class="cell" {id} bind:this={cellRef} data-value={value} on:click={onclick} use:addAttributes>
+<button class="cell" {id} bind:this={cellRef} data-value={value} on:click={handleCellClick} use:addAttributes>
 <span class="number" class:solid bind:this={slot}><slot><!-- optional fallback --></slot></span>
 </button>
   <style>

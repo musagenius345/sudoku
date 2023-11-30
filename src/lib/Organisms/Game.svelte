@@ -2,20 +2,23 @@
   import {blur} from 'svelte/transition'
   import Cell from '$atom/Cell.svelte'
   import  {createTable} from '$store/table'
+  import SudokuToolCollection from '../../sudokujs/src/main'
 
-  let {table, solvedTable, resetGame} = createTable()
+  const sudoku = SudokuToolCollection()
+
+
+  let {table, solveGame, resetGame} = createTable()
   const removeDot = (str) => str === '.' ? '' : str
 
 
   function solveSudoku(){
-    $table = $solvedTable
+    $table = solveGame()
   }
 
   function resetSudoku(){
     $table = ''
     resetGame()
   }
-  
 </script>
   <div class="flex">
   <button on:click={solveSudoku}>Solve</button>
@@ -48,10 +51,10 @@
   border-radius: 12px;
  outline: 0;
   border: 2px solid lightblue;
-  background-color: var(--text);
-  color: var(--ttt);
+  background-color: var(--txt);
+  color: var(--bg);
   padding: var(--space-xs-s) var(--space-m-l);
-  margin: var(--space-s-m) auto;
+  margin: var(--space-2xs-xs) auto;
 }
 
 .flex{

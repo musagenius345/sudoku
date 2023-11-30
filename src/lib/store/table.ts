@@ -17,16 +17,21 @@ export const selectedLevel = persisted<Level>('selectedLevel', 'easy');
 export function createTable(){
   const sudoku = SudokuToolCollection()
   // let chosenLevel = derived(selectedLevel, () => selectedLevel)
-  const table = persisted('sudoku-table-MB', sudoku.generator.generate(get(selectedLevel)))
-  const solution = sudoku.solver.solve(get(table))
-  const solvedTable = persisted('solvedTable', solution)
+  const table = persisted<string | any>('sudoku-table-MB', sudoku.generator.generate(get(selectedLevel)))
+   
+  function solveGame(){
+    return sudoku.solver.solve(get(table))
+  }
+
+
 
   function resetGame(){
     table.set(sudoku.generator.generate((get(selectedLevel))))
+   
   }
  return {
     table,
-    solvedTable,
+    solveGame,
     resetGame
     }
 

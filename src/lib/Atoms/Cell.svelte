@@ -1,5 +1,4 @@
 <script>
-  // import {onMount} from 'svelte'
  export let onclick
  export let value
  const max = 9;
@@ -22,15 +21,17 @@
 
  }
 </script>
-<div class="cell" {id} bind:this={cellRef} data-value={value} on:click={onclick} use:checkEmpty >
+<button class="cell" {id} bind:this={cellRef} data-value={value} on:click={onclick} use:checkEmpty >
 <span class="number" class:solid bind:this={slot}><slot><!-- optional fallback --></slot></span>
-</div>
+</button>
   <style>
   /* div { */
     /* margin: var(--space-s-m); */
     /* padding: var(--space-s-l); */
   /* } */
-
+   button{
+    all:unset;
+  }
   
    .number {
     margin: 0 auto;

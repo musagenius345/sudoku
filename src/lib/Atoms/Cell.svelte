@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from 'svelte'
  export let onclick
  export let value
  const max = 9;
@@ -6,22 +7,23 @@
   let cellRef
   let slot
   let solid
- let id = `cell-${crypto.randomUUID()}`
+ export let id = `cell-${crypto.randomUUID()}`
 
   
 
 
- function checkEmpty(node){
-   const cell = document.getElementById(id)
+ onMount(() => {
+   if( cellRef && cellRef.textContent === ''){
+      solid = false
+    } else {
+     solid = true
+   }
+  }
+ )
 
-   if(cell.textContent !== ''){
-      solid = true
-    }
-
-
- }
+ // $: solid = cellRef.textContent === '' ? false : true
 </script>
-<button class="cell" {id} bind:this={cellRef} data-value={value} on:click={onclick} use:checkEmpty >
+<button class="cell" {id} bind:this={cellRef} data-value={value} on:click={onclick} >
 <span class="number" class:solid bind:this={slot}><slot><!-- optional fallback --></slot></span>
 </button>
   <style>
@@ -37,7 +39,7 @@
     margin: 0 auto;
     padding: var(--space-xs-s);
       max-width: 100%; 
-     --size: 1.28rem; 
+     --size: 1.48rem; 
    width: var(--size, 52px); 
    height: var(--size); 
    font-size: clamp(1.35rem, 1.2893rem + 0.3036vw, 1.5625rem);   
@@ -93,6 +95,9 @@
 }
 .solid{
     /* opacity: 0.8; */
+    background-color: var(--original-bg);
+    color: var(--original-clr);
+    border-radius: 50%;
   }
 
 </style>

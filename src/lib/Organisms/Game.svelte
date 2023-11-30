@@ -7,6 +7,7 @@
   const sudoku = SudokuToolCollection()
 
 
+  $: currentGame = 'current'
   let {table, solveGame, resetGame} = createTable()
   const removeDot = (str) => str === '.' ? '' : str
 
@@ -17,14 +18,18 @@
 
   function resetSudoku(){
     $table = ''
+    currentGame = 'new'
     resetGame()
+    currentGame = 'current'
   }
+
+
 </script>
   <div class="flex">
   <button on:click={solveSudoku}>Solve</button>
   <button on:click={resetSudoku}>Reset</button>
   </div>
-{#key table}
+{#key currentGame === 'new' || $table}
 <div class="game grid">
 {#each $table as grid}
    <Cell value={removeDot(grid)}>{removeDot(grid)}</Cell>

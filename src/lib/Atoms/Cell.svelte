@@ -4,9 +4,10 @@
  export let value
  const max = 9;
  const min = 1
-  let cellRef
-  $: slot
+ let cellRef
+ let slot
   let solid
+  $: slot
  export let id = `cell-${crypto.randomUUID()}`
 
   
@@ -32,7 +33,7 @@
  // $: solid = cellRef.textContent === '' ? false : true
 </script>
 
-<button class="cell" {id} bind:this={cellRef} data-value={value} on:click={handleCellClick} use:addAttributes>
+<button class="cell" {id} data-active bind:this={cellRef} data-value={value} on:click={handleCellClick} use:addAttributes>
 <span class="number" class:solid bind:this={slot}><slot><!-- optional fallback --></slot></span>
 </button>
   <style>
@@ -76,6 +77,7 @@
     max-width: 100%;
   position: relative;
   width: var(--size);
+  user-select: none;
   height: var(--size);
 }
 

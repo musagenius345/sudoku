@@ -1,12 +1,12 @@
 <script lang='ts'>
   import {blur} from 'svelte/transition'
   import Cell from '$atom/Cell.svelte'
+  import {GAME_MODE} from '$store/mode'
+  import ControlButton from '$atom/ControlButton.svelte'
   import  {createTable, selectedLevel} from '$store/table'
   import SudokuToolCollection from '../../sudokujs/src/main'
 
   const sudoku = SudokuToolCollection()
-  let GAME_MODE = null
-
   let {table, solveGame, resetGame, solved} = createTable()
   const removeDot = (str) => str === '.' ? '' : str
 
@@ -16,36 +16,20 @@
   }
 
   function resetSudoku(){
+    GAME_MODE = 'EDIT'
     $solved = !$solved
     $table = ''
     resetGame()
   }
-  
-  function handleControls(e){
-    const control = e.currentTarget.dataset.control
-    // console.log(control)
-    
-   switch (control) {
-    case 'delete':
-      GAME_MODE = 'DELETE'
-      break;
-    case 'undo':
-      GAME_MODE = 'UNDO'
-      break;
-    case 'check':
-      GAME_MODE = 'CHECK'
-      break;
-    case 'edit':
-      GAME_MODE = 'EDIT'
-      break;
-    default:
-      break;
-   } 
+  function activeMode(node){
+    node.addEventListener('click', highlight)
+
+    function highlight(){
+      node.classList.toggle('currentMode')
+      console.log(node.classList)
+    }
   }
-
   
-$: GAME_MODE
-
 function handleCellClick(e) {
     if(e.currentTarget.textContent === '' && GAME_MODE === 'EDIT'){
       console.log(e.currentTarget.span)
@@ -56,7 +40,7 @@ function handleCellClick(e) {
   
 }
 </script>
-  <button>{GAME_MODE}</button>
+  <button>{$GAME_MODE}</button>
   <div class="flex">
   <button class='solve' on:click={solveSudoku}>Solve</button>
   <button class='reset' on:click={resetSudoku}>Reset</button>
@@ -78,22 +62,22 @@ function handleCellClick(e) {
 
 <div class="controls choices">
   <!-- x delete -->
-  <button on:click={handleControls} data-control='delete' class="control delete">
+  <ControlButton control='delete'>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-  </button>
+  </ControlButton>
     <!-- Undo (repeat ccw) -->
-  <button on:click={handleControls} data-control='undo' class="control undo">
+  <ControlButton control='undo'>
      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-  </button>
+  </ControlButton>
 
     <!-- check mark-->
-  <button on:click={handleControls} data-control='check' class="control checkProgress">
+  <ControlButton  control='check'>
      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-  </button>
+  </ControlButton>
 
-  <button on:click={handleControls} data-control='edit' class="control edit">
+  <ControlButton control='edit'>
     <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
-  </button>
+  </ControlButton>
   <!-- <div class="control"></div> -->
 </div>
 
@@ -107,7 +91,7 @@ function handleCellClick(e) {
 }
 
 
-.number, .control{
+.number{
   
   --size: 2.2rem;
  text-align: center;
@@ -121,12 +105,8 @@ function handleCellClick(e) {
 
   cursor: pointer;
 }
-.control{
-    --size: 2.8rem;
-    margin: var(--space-s-m) 0;
-    gap: var(--space-l-xl);
-  }
-.number:is(:hover, :focus), .control:is(:hover, :focus){
+
+.number:is(:hover, :focus){
    background-color: var(--choice-focus-bg);
    color: var(--choice-focus-clr);
    outline-offset: 2px;
@@ -159,4 +139,14 @@ button:is(.solve, .reset){
 .flex{
   display: flex;
 }
+
+
+/* .currentMode {
+   color: var(--bg); 
+   background-color: var(--txt);
+   outline: 3px solid var(--bg);
+   outline-offset: -5px;
+   border-radius: 50%; 
+ } */
+
 </style>

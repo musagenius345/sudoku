@@ -1,12 +1,17 @@
 <script lang='ts'>
 
+  import { createStack } from '$store/stack'
   import {GAME_MODE} from '$store/mode' 
   import type {Mode} from '$store/mode'
+
+  const {stack, resetStack,  currentKey, undoStack, prevKey} = createStack()
+
   $: currentMode = false
 
   function currentModeAction(node: HTMLElement, mode: Mode){
     const control = (node.dataset.control).toUpperCase()
     node.addEventListener('click', highlight(mode))
+
     function highlight(mode){
       if(control === mode){
         currentMode = !currentMode
@@ -17,12 +22,13 @@
     }
 
     return {
-      update(mode)  {
+      update(mode: Mode)  {
          node.addEventListener('click', highlight(mode))
       }
     }
 
   }
+
 
 
   function handleControls(e){
@@ -85,7 +91,7 @@
    color: var(--choice-focus-clr);
    outline-offset: 2px;
    outline: 2px solid var(--choice-focus-bg);
-  transition: all 200ms ease-in-out;
+  transition: all var(--transition-time) ease-in-out;
   }
 
 

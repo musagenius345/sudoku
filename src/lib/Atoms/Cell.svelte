@@ -57,7 +57,7 @@
    cursor: pointer; 
    text-align:center; 
    font-family: 'Varela', 'Permanent Marker', serif; 
-   transition: all 200ms ease-in-out; 
+   transition: all var(--transition-time) ease-in-out; 
  } 
 
 :is(.number) { 

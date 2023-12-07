@@ -1,34 +1,31 @@
 <script lang='ts'>
   import {blur} from 'svelte/transition'
   import Cell from '$atom/Cell.svelte'
+  import Key  from '$atom/Key.svelte'
   import {GAME_MODE} from '$store/mode'
   import ControlButton from '$atom/ControlButton.svelte'
   import  {createTable, selectedLevel} from '$store/table'
+  import { createStack } from '$store/stack'
   import SudokuToolCollection from '../../sudokujs/src/main'
 
   const sudoku = SudokuToolCollection()
   let {table, solveGame, resetGame, solved} = createTable()
-  const removeDot = (str) => str === '.' ? '' : str
 
+  const {stack, resetStack,  currentKey, undoStack, prevKey} = createStack()
+   
+  const removeDot = (str) => str === '.' ? '' : str
 
   function solveSudoku(){
     $table = solveGame()
   }
 
   function resetSudoku(){
-    GAME_MODE = 'EDIT'
+    $GAME_MODE = 'EDIT'
     $solved = !$solved
     $table = ''
     resetGame()
   }
-  function activeMode(node){
-    node.addEventListener('click', highlight)
-
-    function highlight(){
-      node.classList.toggle('currentMode')
-      console.log(node.classList)
-    }
-  }
+ 
   
 function handleCellClick(e) {
     if(e.currentTarget.textContent === '' && GAME_MODE === 'EDIT'){
@@ -40,7 +37,7 @@ function handleCellClick(e) {
   
 }
 </script>
-  <button>{$GAME_MODE}</button>
+  <button>{$stack}</button>
   <div class="flex">
   <button class='solve' on:click={solveSudoku}>Solve</button>
   <button class='reset' on:click={resetSudoku}>Reset</button>
@@ -56,7 +53,7 @@ function handleCellClick(e) {
 
 <div class="choices">
   {#each Array.from({length: 9}, (v, i) => i + 1) as number}
-    <button class='number'>{number}</button>
+    <Key  value={number}>{number}</Key>
   {/each}
 </div>
 
@@ -91,28 +88,6 @@ function handleCellClick(e) {
 }
 
 
-.number{
-  
-  --size: 2.2rem;
- text-align: center;
-  font-size: var(--step-2);
-  width: var(--size);
-  height: var(--size);
-  padding: var(--space-3xs-2xs);
-  border: 1px solid var(--original-clr);
-  color: var(--original-clr);
-  border-radius: 50%;
-
-  cursor: pointer;
-}
-
-.number:is(:hover, :focus){
-   background-color: var(--choice-focus-bg);
-   color: var(--choice-focus-clr);
-   outline-offset: 2px;
-   outline: 2px solid var(--choice-focus-bg);
-  transition: all 200ms ease-in-out;
-  }
 
 .grid {
   max-width: 100%;
@@ -138,6 +113,7 @@ button:is(.solve, .reset){
 
 .flex{
   display: flex;
+    gap: var(--space-xs-s);
 }
 
 

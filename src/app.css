@@ -4,12 +4,14 @@
   font-family: 'Varela';
   src: url('/fonts/varela-round-latin-400-normal.woff2'),
    url('/fonts/varela-round-latin-400-normal.woff');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Mulish';
   src: url('/fonts/mulish-latin-ext-900-normal.woff2'),
        url('/fonts/mulish-latin-ext-900-normal.woff');
+  font-display: swap;
 }
 
 
@@ -29,6 +31,7 @@
   --choice-focus-clr: var(--bg);
   --similar-bg: #A8B5BD;
   --similar-clr: var(--bg);
+  --transition-time: 100ms;
 }
 
 
